@@ -24,7 +24,7 @@ include_once(__DIR__ . "/../../includes/sidebar.php");
     </div>
 
     <div class="col-xl-3 col-md-6 mb-2">
-      <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100 report_sale">
+      <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100 report_product">
         <i class="fa fa-file-lines pe-2"></i> รายงานสินค้าคงเหลือ
       </a>
     </div>
@@ -134,5 +134,11 @@ $(".filter_category").each(function() {
       cache: true
     }
   });
+});
+
+$(document).on("click", ".report_product", function() {
+  let category = ($(".filter_category").val() ? $(".filter_category").val() : "");
+  let keyword = $(".filter_keyword").val();
+  window.open("/reportproduct/" + category + "/" + keyword);
 });
 </script>

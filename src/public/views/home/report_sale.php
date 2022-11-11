@@ -105,7 +105,7 @@ ob_start();
     </thead>
     <tbody>
       <?php
-      foreach ($result as $row) :;
+      foreach ($result as $row) :
       ?>
       <tr>
         <td><?php echo $row['product_code'] ?></td>

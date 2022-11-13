@@ -1,9 +1,15 @@
 <?php
+
+use app\classes\Query;
+
 $page = "product";
 $group = "";
 
 include_once(__DIR__ . "/../../includes/header.php");
 include_once(__DIR__ . "/../../includes/sidebar.php");
+require_once(__DIR__ . "/../../vendor/autoload.php");
+
+$Query = new Query();
 ?>
 
 <main id="main" class="main">
@@ -54,6 +60,69 @@ include_once(__DIR__ . "/../../includes/sidebar.php");
       </div>
     </div>
   </div>
+
+  <div class="row justify-content-center">
+    <div class="col-xl-6 my-3">
+      <div class="card shadow">
+        <div class="card-body">
+          <h4 class="text-center">10 อันดับ ปริมาณสินค้าคงเหลือ (ต่ำ)</h4>
+          <div class="table-responsive">
+            <table class="table table-hover table-sm w-100">
+              <thead>
+                <tr>
+                  <th width="60%">สินค้า</th>
+                  <th width="20%">จำนวน</th>
+                  <th width="20%">ยอดเงินรวม</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $products = $Query->product_count();
+                foreach ($products as $product) :
+                ?>
+                <tr>
+                  <td><?php echo $product['name'] ?></td>
+                  <td class="text-center"><?php echo $product['qty'] ?></td>
+                  <td class="text-end"><?php echo $product['cost'] ?></td>
+                </tr>
+                <?php endforeach ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6 my-3">
+      <div class="card shadow">
+        <div class="card-body">
+          <h4 class="text-center">จำนวนสินค้า (หมวดหมู่)</h4>
+          <div class="table-responsive">
+            <table class="table table-hover table-sm w-100">
+              <thead>
+                <tr>
+                  <th width="60%">หมวดหมู่</th>
+                  <th width="20%">จำนวน</th>
+                  <th width="20%">มูลค่า</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $category = $Query->category_count();
+                foreach ($category as $cat) :
+                ?>
+                <tr>
+                  <td><?php echo $cat['name'] ?></td>
+                  <td class="text-center"><?php echo $cat['count'] ?></td>
+                  <td class="text-end"><?php echo $cat['cost'] ?></td>
+                </tr>
+                <?php endforeach ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 
 
@@ -78,12 +147,21 @@ function filter_data(category, keyword) {
       }
     },
     columnDefs: [{
-      targets: [3, 4, 5],
-      className: "text-center",
-    }, {
-      targets: [6, 7],
-      className: "text-end",
-    }],
+        targets: [3, 4, 5],
+        className: "text-center",
+      }, {
+        targets: [6, 7],
+        className: "text-end",
+      },
+      {
+        targets: [4, 6, 7],
+        render: $.fn.dataTable.render.number(',', '.', 2, '')
+      },
+      {
+        targets: [5],
+        render: $.fn.dataTable.render.number(',', '.', 0, '')
+      }
+    ],
     oLanguage: {
       sLengthMenu: "แสดง _MENU_ ลำดับ ต่อหน้า",
       sZeroRecords: "ไม่พบข้อมูลที่ค้นหา",

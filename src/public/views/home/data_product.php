@@ -12,7 +12,7 @@ $stmt = $dbcon->prepare("SELECT COUNT(*) FROM sma_products");
 $stmt->execute();
 $count = $stmt->fetchColumn();
 
-$column = ["A.status", "A.id", "A.name", "A.email", "B.level"];
+$column = ["C.name", "A.code", "A.name", "B.name", "price", "quantity", "(cost * quantity)", "(price * quantity) - ((price * quantity) * tax_rate / 100)"];
 
 $category = (isset($_POST['category']) ? ($_POST['category']) : "");
 $keyword = (isset($_POST['keyword']) ? ($_POST['keyword']) : "");
@@ -26,7 +26,7 @@ $limit_length = (isset($_POST['length']) ? $_POST['length'] : "");
 $draw = (isset($_POST['draw']) ? $_POST['draw'] : "");
 
 $sql = "SELECT 
-C.name category_name,A.code product_code,A.name product_name,B.name unit,FORMAT(price,2) price,FORMAT(quantity,0) quantity,FORMAT(cost * quantity,2) cost,FORMAT((price * quantity) - ((price * quantity) * tax_rate / 100),2) sale
+C.name category_name,A.code product_code,A.name product_name,B.name unit,price,quantity,(cost * quantity) cost,((price * quantity) - ((price * quantity) * tax_rate / 100)) sale
 FROM sma_products A 
 LEFT JOIN sma_units B 
 ON A.unit = B.id

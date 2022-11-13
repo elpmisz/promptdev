@@ -12,7 +12,7 @@ $stmt = $dbcon->prepare("SELECT COUNT(*) FROM sma_sale_items");
 $stmt->execute();
 $count = $stmt->fetchColumn();
 
-$column = ["A.status", "A.id", "A.name", "A.email", "B.level"];
+$column = ["A.product_code", "A.product_name", "A.product_unit_code", "A.quantity", "A.subtotal", "B.date"];
 
 $status = (isset($_POST['status']) ? intval($_POST['status']) : "");
 $date = (isset($_POST['date']) ? ($_POST['date']) : "");

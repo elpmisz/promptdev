@@ -110,7 +110,7 @@ $card = $Query->sale_card();
       <div class="card shadow">
         <div class="card-body">
           <h4 class="text-center">10 อันดับสินค้าขายดี</h4>
-          <h4 class="text-center">ประจำเดือน</h4>
+          <h4 class="text-center">ประจำเดือน <?php echo $Query->month_th(date('n')) ?></h4>
           <div class="table-responsive">
             <table class="table table-hover table-sm w-100">
               <thead>
@@ -141,7 +141,7 @@ $card = $Query->sale_card();
       <div class="card shadow">
         <div class="card-body">
           <h4 class="text-center">10 อันดับสินค้าขายดี</h4>
-          <h4 class="text-center">ประจำปี</h4>
+          <h4 class="text-center">ประจำปี <?php echo date('Y') + 543 ?></h4>
           <div class="table-responsive">
             <table class="table table-hover table-sm w-100">
               <thead>
@@ -173,7 +173,7 @@ $card = $Query->sale_card();
       <div class="card shadow">
         <div class="card-body">
           <h4 class="text-center">10 อันดับหมวดหมู่ขายดี</h4>
-          <h4 class="text-center">ประจำเดือน</h4>
+          <h4 class="text-center">ประจำเดือน <?php echo $Query->month_th(date('n')) ?></h4>
           <div class="table-responsive">
             <table class="table table-hover table-sm w-100">
               <thead>
@@ -193,7 +193,14 @@ $card = $Query->sale_card();
                   <td class="text-center"><?php echo $sale['amount'] ?></td>
                   <td class="text-end"><?php echo $sale['total'] ?></td>
                 </tr>
-                <?php endforeach ?>
+                <?php
+                endforeach;
+                $j = 10 - count($sales);
+                for ($i = 0; $i < $j; $i++) {
+                  echo "<tr><td colspan='3' style='color: #FFF;'>-</td><tr>";
+                }
+                ?>
+
               </tbody>
             </table>
           </div>
@@ -204,7 +211,7 @@ $card = $Query->sale_card();
       <div class="card shadow">
         <div class="card-body">
           <h4 class="text-center">10 อันดับหมวดหมู่ขายดี</h4>
-          <h4 class="text-center">ประจำปี</h4>
+          <h4 class="text-center">ประจำปี <?php echo date('Y') + 543 ?></h4>
           <div class="table-responsive">
             <table class="table table-hover table-sm w-100">
               <thead>
@@ -224,7 +231,14 @@ $card = $Query->sale_card();
                   <td class="text-center"><?php echo $sale['amount'] ?></td>
                   <td class="text-end"><?php echo $sale['total'] ?></td>
                 </tr>
-                <?php endforeach ?>
+                <?php
+                endforeach;
+
+                $j = 10 - count($sales);
+                for ($i = 0; $i < $j; $i++) {
+                  echo "<tr><td colspan='3' style='color: #FFF;'>-</td><tr>";
+                }
+                ?>
               </tbody>
             </table>
           </div>

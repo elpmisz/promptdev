@@ -9,8 +9,8 @@ class Database
 {
   private $dbCon = null;
   private $dbHost = "database";
-  private $dbUser = "root";
-  private $dbPass = "P@ssw0rd#db";
+  private $dbUser = "promptdev";
+  private $dbPass = "SILm2n4y5QJQp#7bwPb8";
   private $dbName = "posdata";
   private $dbChar = "utf8";
   private $dbOptions = [

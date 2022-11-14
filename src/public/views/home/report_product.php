@@ -96,7 +96,7 @@ ob_start();
           </u>
         </td>
       </tr>
-      <?
+      <?php
         $sql = "SELECT A.code product_code,A.name product_name,B.name unit_name,FORMAT(price,2) price,FORMAT(quantity,0) quantity,FORMAT(cost * quantity,2) cost,FORMAT((price * quantity) - ((price * quantity) * tax_rate / 100),2) sale
         FROM sma_products A
         LEFT JOIN sma_units B

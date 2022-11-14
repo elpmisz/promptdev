@@ -1,7 +1,7 @@
 <?php
 $dbhost = "database";
-$dbuser = "root";
-$dbpass = "P@ssw0rd#db";
+$dbuser = "promptdev";
+$dbpass = "SILm2n4y5QJQp#7bwPb8";
 $dbname = "posdata";
 $dbchar = "utf8";
 

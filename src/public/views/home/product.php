@@ -216,7 +216,6 @@ $(".filter_category").each(function() {
 
 $(document).on("click", ".report_product", function() {
   let category = ($(".filter_category").val() ? $(".filter_category").val() : "");
-  let keyword = $(".filter_keyword").val();
-  window.open("/reportproduct/" + category + "/" + keyword);
+  window.open("/reportproduct/" + category + "/");
 });
 </script>

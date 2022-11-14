@@ -12,13 +12,6 @@ $Router->map("GET", "/error", function () {
   require(__DIR__ . "/views/home/error.php");
 });
 
-$Router->map("POST", "/datasale", function () {
-  require(__DIR__ . "/views/home/data_sale.php");
-});
-$Router->map("POST", "/dataproduct", function () {
-  require(__DIR__ . "/views/home/data_product.php");
-});
-
 $Router->map("GET", "/reportsale/[**:params]", function ($params) {
   require(__DIR__ . "/views/home/report_sale.php");
 });
@@ -29,6 +22,12 @@ $Router->map("GET", "/reportproduct/[**:params]", function ($params) {
   require(__DIR__ . "/views/home/report_product.php");
 });
 
+$Router->map("POST", "/datasale", function () {
+  require(__DIR__ . "/views/home/data_sale.php");
+});
+$Router->map("POST", "/dataproduct", function () {
+  require(__DIR__ . "/views/home/data_product.php");
+});
 $Router->map("POST", "/action/[**:params]", function ($params) {
   require(__DIR__ . "/views/home/action.php");
 });

@@ -54,8 +54,10 @@ $card = $Query->sale_card();
     <div class="col-xl-3 col-md-6 mb-2">
       <input type="text" class="form-control form-control-sm filter_date" placeholder="-- วันที่ --">
     </div>
-
-    <div class="col-xl-6 col-md-6 mb-2">
+    <div class="col-xl-3 col-md-6 mb-2">
+      <select class="form-select form-select-sm filter_sale" data-placeholder="-- ผู้ขาย --"></select>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-2">
       <input type="text" class="form-control form-control-sm filter_keyword" placeholder="-- คำค้นหา --">
     </div>
 
@@ -95,6 +97,8 @@ $card = $Query->sale_card();
                   <th width="10%">หน่วย</th>
                   <th width="10%">จำนวน</th>
                   <th width="10%">ยอดเงินรวม</th>
+                  <th width="10%">POS</th>
+                  <th width="10%">ผู้ขาย</th>
                   <th width="20%">วันที่ทำรายการ</th>
                 </tr>
               </thead>
@@ -256,7 +260,7 @@ include_once(__DIR__ . "/../../includes/footer.php");
 <script>
 filter_data();
 
-function filter_data(status, date, keyword) {
+function filter_data(status, date, sale, keyword) {
   let data = $(".data").DataTable({
     serverSide: true,
     scrollX: true,
@@ -268,11 +272,12 @@ function filter_data(status, date, keyword) {
       data: {
         status: status,
         date: date,
+        sale: sale,
         keyword: keyword
       }
     },
     columnDefs: [{
-      targets: [2, 3, 4, 5],
+      targets: [2, 3, 4, 5, 6, 7],
       className: "text-center",
     }],
     oLanguage: {
@@ -307,11 +312,12 @@ $(document).on("click", ".count", function() {
 $(document).on("click", ".filter_btn", function() {
   let status = 1;
   let date = $(".filter_date").val();
+  let sale = $(".filter_sale").val();
   let keyword = $(".filter_keyword").val();
 
-  if (status || date || keyword) {
+  if (status || date || sale || keyword) {
     $(".data").DataTable().destroy();
-    filter_data(status, date, keyword);
+    filter_data(status, date, sale, keyword);
   } else {
     $(".data").DataTable().destroy();
     filter_data();
@@ -349,6 +355,28 @@ $(".filter_date").on("apply.daterangepicker", function(ev, picker) {
 
 $(".filter_date").on("cancel.daterangepicker", function(ev, picker) {
   $(this).val("");
+});
+
+$(".filter_sale").each(function() {
+  $(this).select2({
+    containerCssClass: "select2--small",
+    dropdownCssClass: "select2--small",
+    dropdownParent: $(this).parent(),
+    width: "100%",
+    allowClear: true,
+    ajax: {
+      url: "/action/sale",
+      method: 'POST',
+      dataType: 'json',
+      delay: 100,
+      processResults: function(data) {
+        return {
+          results: data
+        };
+      },
+      cache: true
+    }
+  });
 });
 
 $(document).on("click", ".report_sale", function() {

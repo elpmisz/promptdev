@@ -11,7 +11,8 @@ $start = (!empty($date[0]) ? str_replace("_", "/", trim($date[0])) : "");
 $end = (!empty($date[1]) ? str_replace("_", "/", trim($date[1])) : "");
 $keyword = (!empty($param[1]) ? urldecode($param[1]) : "");
 
-$sql = "SELECT FORMAT(SUM(A.subtotal),2) amount, FORMAT(SUM(A.subtotal) * 7 / 100, 2) as tax,
+$sql = "SELECT LPAD((B.pos), GREATEST(LENGTH(B.pos), 3), '0') pos,
+FORMAT(SUM(A.subtotal),2) amount, FORMAT(SUM(A.subtotal) * 7 / 100, 2) as tax,
 FORMAT(SUM(A.subtotal) + (SUM(A.subtotal) * 7 / 100),2) as total,
 (CASE WHEN B.id THEN MIN(reference_no) ELSE NULL END) min,
 (CASE WHEN B.id THEN MAX(reference_no) ELSE NULL END) max
@@ -92,7 +93,7 @@ ob_start();
     </thead>
     <tbody>
       <tr>
-        <td>002</td>
+        <td><?php echo $sale['pos'] ?></td>
         <td>
           ใบกำกับภาษีเริ่มต้น : <?php echo $sale['min'] ?> <br>
           ใบกำกับภาษีสิ้นสุด : <?php echo $sale['max'] ?>

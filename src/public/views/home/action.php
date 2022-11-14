@@ -37,3 +37,22 @@ if ($action === "category") :
     die($e->getMessage());
   }
 endif;
+
+if ($action === "sale") :
+  try {
+    $keyword = (isset($_POST['q']) ? $Validation->input($_POST['q']) : "");
+    $result = $Query->user_select($keyword);
+
+    $data = [];
+    foreach ($result as $row) :
+      $data[] = [
+        "id" => $row['id'],
+        "text" => $row['username']
+      ];
+    endforeach;
+
+    echo json_encode($data);
+  } catch (PDOException $e) {
+    die($e->getMessage());
+  }
+endif;

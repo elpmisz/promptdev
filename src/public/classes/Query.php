@@ -180,6 +180,21 @@ class Query
     return $stmt->fetchAll();
   }
 
+  public function user_select($keyword)
+  {
+    $sql = "SELECT B.id,B.username
+    FROM sma_sales A 
+    LEFT JOIN sma_users B
+    ON A.created_by = B.id ";
+    if ($keyword) {
+      $sql .= " WHERE (B.username LIKE '%{$keyword}%')";
+    }
+    $sql .= " GROUP BY A.created_by ";
+    $stmt = $this->dbcon->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll();
+  }
+
   public function month_th($month)
   {
     $months = [

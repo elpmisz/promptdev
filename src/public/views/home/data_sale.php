@@ -17,6 +17,7 @@ $column = ["A.product_code", "A.product_name", "A.product_unit_code", "A.quantit
 $status = (isset($_POST['status']) ? intval($_POST['status']) : "");
 $date = (isset($_POST['date']) ? ($_POST['date']) : "");
 $conv = (!empty($date) ? explode("-", $date) : "");
+$sale = (isset($_POST['sale']) ? ($_POST['sale']) : "");
 $keyword = (isset($_POST['keyword']) ? ($_POST['keyword']) : "");
 
 // $keyword = (isset($_POST['search']['value']) ? $_POST['search']['value'] : "");
@@ -27,12 +28,16 @@ $limit_start = (isset($_POST['start']) ? $_POST['start'] : "");
 $limit_length = (isset($_POST['length']) ? $_POST['length'] : "");
 $draw = (isset($_POST['draw']) ? $_POST['draw'] : "");
 
-$sql = "SELECT A.product_code,A.product_name,A.product_unit_code unit,FORMAT(A.quantity,0) qty,
+$sql = "SELECT A.product_code,A.product_name,A.product_unit_code unit,
+LPAD((B.pos), GREATEST(LENGTH(B.pos), 3), '0') pos,C.username,
+FORMAT(A.quantity,0) qty,
 FORMAT(A.subtotal,2) total,
 DATE_FORMAT(B.date, '%d/%m/%Y - %H:%i น.') date 
 FROM sma_sale_items A
 LEFT JOIN sma_sales B
-ON A.sale_id = B.id ";
+ON A.sale_id = B.id
+LEFT JOIN sma_users C
+ON B.created_by = C.id ";
 
 if ($status === 2) {
   $sql .= " WHERE DATE(B.date) = DATE(NOW()) ";
@@ -46,6 +51,10 @@ if ($status === 2) {
 
 if ($conv) {
   $sql .= " AND DATE(B.date) BETWEEN STR_TO_DATE('{$conv[0]}', '%d/%m/%Y') AND STR_TO_DATE('{$conv[1]}', '%d/%m/%Y') ";
+}
+
+if ($sale) {
+  $sql .= " AND C.id = {$sale} ";
 }
 
 if ($keyword) {
@@ -78,7 +87,9 @@ foreach ($result as $row) {
     "2" => $row['unit'],
     "3" => $row['qty'],
     "4" => $row['total'],
-    "5" => $row['date'],
+    "5" => $row['pos'],
+    "6" => $row['username'],
+    "7" => $row['date'],
   ];
 }
 

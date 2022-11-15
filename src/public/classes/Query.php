@@ -189,7 +189,8 @@ class Query
     if ($keyword) {
       $sql .= " WHERE (B.username LIKE '%{$keyword}%')";
     }
-    $sql .= " GROUP BY A.created_by ";
+    $sql .= " GROUP BY A.created_by 
+    ORDER BY B.id ASC";
     $stmt = $this->dbcon->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll();

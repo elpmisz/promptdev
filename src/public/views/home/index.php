@@ -68,14 +68,26 @@ $card = $Query->sale_card();
     </div>
 
     <div class="col-xl-3 col-md-6 mb-2">
-      <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100 report_sale">
-        <i class="fa fa-file-lines pe-2"></i> รายงานขาย
+      <a href="javascript:void(0)" class="btn btn-danger btn-sm w-100 report_sale">
+        <i class="fa fa-file-lines pe-2"></i> รายงานขาย (PDF)
       </a>
     </div>
 
     <div class="col-xl-3 col-md-6 mb-2">
-      <a href="javascript:void(0)" class="btn btn-success btn-sm w-100 report_tax">
-        <i class="fa fa-file-lines pe-2"></i> รายงานภาษี
+      <a href="javascript:void(0)" class="btn btn-success btn-sm w-100 excel_sale">
+        <i class="fa fa-file-excel pe-2"></i> รายงานขาย (Excel)
+      </a>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-2">
+      <a href="javascript:void(0)" class="btn btn-danger btn-sm w-100 report_tax">
+        <i class="fa fa-file-lines pe-2"></i> รายงานภาษี (PDF)
+      </a>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-2">
+      <a href="javascript:void(0)" class="btn btn-success btn-sm w-100 excel_tax">
+        <i class="fa fa-file-excel pe-2"></i> รายงานภาษี (Excel)
       </a>
     </div>
 
@@ -392,11 +404,25 @@ $(document).on("click", ".report_sale", function() {
   window.open("/reportsale/" + date + "/" + keyword);
 });
 
+$(document).on("click", ".excel_sale", function() {
+  let date = $(".filter_date").val();
+  date = date.split("/").join("_");
+  let keyword = $(".filter_keyword").val();
+  window.open("/excelsale/" + date + "/" + keyword);
+});
+
 $(document).on("click", ".report_tax", function() {
   let date = $(".filter_date").val();
   date = date.split("/").join("_");
   let keyword = $(".filter_keyword").val();
   window.open("/reporttax/" + date + "/" + keyword);
+});
+
+$(document).on("click", ".excel_tax", function() {
+  let date = $(".filter_date").val();
+  date = date.split("/").join("_");
+  let keyword = $(".filter_keyword").val();
+  window.open("/exceltax/" + date + "/" + keyword);
 });
 
 $(document).on("click", ".report_shift", function() {

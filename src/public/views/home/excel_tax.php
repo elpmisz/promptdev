@@ -40,7 +40,10 @@ $stmt = $dbcon->prepare($sql);
 $stmt->execute();
 $user = $stmt->fetch();
 
-ob_start();
+$date = date('Y-m-d');
+$fileName = "tax_{$date}.xls";
+header("Content-type: application/vnd.ms-excel");
+header("Content-Disposition: attachment; filename={$fileName}");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,6 +85,22 @@ ob_start();
   <table>
     <thead>
       <tr>
+        <td colspan="3">
+          <b>ชื่อผู้ประกอบการ <?php echo $user['name'] ?></b>
+        </td>
+        <td colspan="4" class="text-right">
+          <b>เลขประจำตัวผู้เสียภาษี <?php echo $user['vat_no'] ?></b>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <b>ที่อยู่ <?php echo $user['address'] ?></b>
+        </td>
+        <td colspan="4" class="text-right">
+          <b>ระหว่างวันที่ <?php echo $start ?> ถึง วันที่ <?php echo $end ?></b>
+        </td>
+      </tr>
+      <tr>
         <th>เครื่องขาย เลขที่</th>
         <th>เลขที่ใบกำกับภาษี</th>
         <th>หมายเลข REG</th>
@@ -119,39 +138,3 @@ ob_start();
 </body>
 
 </html>
-<?php
-$html = ob_get_contents();
-ob_end_clean();
-
-$random = md5(microtime(true));
-$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L', 'default_font' => 'garuda', 'margin_top' => 40]);
-
-$header = '
-<h3 style="text-align: center;">รายงาน ภาษีขาย</h3>
-<table width="100%">
-  <tr style="border: none;">
-    <td width="50%" style="border: none;"><h3>ชื่อผู้ประกอบการ ' . $user['name'] . '</h3></td>
-    <td width="50%" style="text-align: right; border: none;"><h3>เลขประจำตัวผู้เสียภาษี ' . $user['vat_no'] . '</h3></td>
-  </tr>
-  <tr style="border: none;">
-    <td width="50%" style="border: none;"><h3>ที่อยู่ ' . $user['address'] . '</h3></td>
-    <td width="50%" style="text-align: right; border: none;"><h3>ระหว่างวันที่ ' . $start . ' ถึง วันที่ ' . $end . '</h3></td>
-  </tr>
-</table>';
-
-$footer = '
-<table width="100%">
-  <tr style="border: none;">
-    <td width="50%" style="border: none;"><h3>{DATE d/m/Y}</h3></td>
-    <td width="50%" style="text-align: right; border: none;"><h3>{PAGENO}/{nbpg}</h3></td>
-  </tr>
-</table>';
-
-$mpdf->SetHTMLHeader($header);
-$mpdf->SetHTMLFooter($footer);
-
-$mpdf->WriteHTML($html);
-$mpdf->Output("report_{$random}", "I");
-
-
-// echo $html;

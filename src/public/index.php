@@ -15,11 +15,20 @@ $Router->map("GET", "/error", function () {
 $Router->map("GET", "/reportsale/[**:params]", function ($params) {
   require(__DIR__ . "/views/home/report_sale.php");
 });
+$Router->map("GET", "/excelsale/[**:params]", function ($params) {
+  require(__DIR__ . "/views/home/excel_sale.php");
+});
 $Router->map("GET", "/reporttax/[**:params]", function ($params) {
   require(__DIR__ . "/views/home/report_tax.php");
 });
+$Router->map("GET", "/exceltax/[**:params]", function ($params) {
+  require(__DIR__ . "/views/home/excel_tax.php");
+});
 $Router->map("GET", "/reportproduct/[**:params]", function ($params) {
   require(__DIR__ . "/views/home/report_product.php");
+});
+$Router->map("GET", "/excelproduct/[**:params]", function ($params) {
+  require(__DIR__ . "/views/home/excel_product.php");
 });
 $Router->map("GET", "/reportshift/[**:params]", function ($params) {
   require(__DIR__ . "/views/home/report_shift.php");

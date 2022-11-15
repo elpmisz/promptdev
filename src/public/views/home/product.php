@@ -30,8 +30,14 @@ $Query = new Query();
     </div>
 
     <div class="col-xl-3 col-md-6 mb-2">
-      <a href="javascript:void(0)" class="btn btn-primary btn-sm w-100 report_product">
-        <i class="fa fa-file-lines pe-2"></i> รายงานสินค้าคงเหลือ
+      <a href="javascript:void(0)" class="btn btn-danger btn-sm w-100 report_product">
+        <i class="fa fa-file-lines pe-2"></i> รายงานสินค้าคงเหลือ (PDF)
+      </a>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-2">
+      <a href="javascript:void(0)" class="btn btn-success btn-sm w-100 excel_product">
+        <i class="fa fa-file-lines pe-2"></i> รายงานสินค้าคงเหลือ (Excel)
       </a>
     </div>
   </div>
@@ -217,5 +223,10 @@ $(".filter_category").each(function() {
 $(document).on("click", ".report_product", function() {
   let category = ($(".filter_category").val() ? $(".filter_category").val() : "");
   window.open("/reportproduct/" + category + "/");
+});
+
+$(document).on("click", ".excel_product", function() {
+  let category = ($(".filter_category").val() ? $(".filter_category").val() : "");
+  window.open("/excelproduct/" + category + "/");
 });
 </script>

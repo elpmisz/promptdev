@@ -21,6 +21,9 @@ $Router->map("GET", "/reporttax/[**:params]", function ($params) {
 $Router->map("GET", "/reportproduct/[**:params]", function ($params) {
   require(__DIR__ . "/views/home/report_product.php");
 });
+$Router->map("GET", "/reportshift/[**:params]", function ($params) {
+  require(__DIR__ . "/views/home/report_shift.php");
+});
 
 $Router->map("POST", "/datasale", function () {
   require(__DIR__ . "/views/home/data_sale.php");

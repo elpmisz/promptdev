@@ -79,6 +79,12 @@ $card = $Query->sale_card();
       </a>
     </div>
 
+    <div class="col-xl-3 col-md-6 mb-2">
+      <a href="javascript:void(0)" class="btn btn-danger btn-sm w-100 report_shift">
+        <i class="fa fa-file-lines pe-2"></i> รายงานกะ
+      </a>
+    </div>
+
     <div class="col-xl-3 col-md-6 mb-2" style="display: none;">
       <input type="text" class="form-control form-control-sm status" readonly>
     </div>
@@ -391,5 +397,12 @@ $(document).on("click", ".report_tax", function() {
   date = date.split("/").join("_");
   let keyword = $(".filter_keyword").val();
   window.open("/reporttax/" + date + "/" + keyword);
+});
+
+$(document).on("click", ".report_shift", function() {
+  let date = $(".filter_date").val();
+  date = date.split("/").join("_");
+  let sale = ($(".filter_sale").val() ? $(".filter_sale").val() : "");
+  window.open("/reportshift/" + date + "/" + sale);
 });
 </script>
